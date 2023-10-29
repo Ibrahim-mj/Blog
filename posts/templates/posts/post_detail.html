@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.content }}</p>
+            {% if post.image %}
+                <p><a href="{{ post.image.url }}" target="_blank">View Image</a></p>
+            {% endif %}
+            <hr>
+            <small>Category: {{ post.category }}</small>
+            <small class="">Created: {{ post.created_at|date:"F d, Y H:i" }}</small>
+            <small class="">Modified: {{ post.modified_at|date:"F d, Y H:i" }}</small>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Author</h5>
+                    <p class="card-text">{{ post.author }}</p>
+                </div>
+            </div>
+            <a href="{% url 'posts:post-update' post.pk %}" class="btn btn-primary mt-3">Update Post</a>
+            <a href="{% url 'posts:post-delete' post.pk %}" class="btn btn-danger mt-3">Delete Post</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="list-group">
+    <ul class="list-group">
+        {% for post in posts %}
+            <li class="list-group-item">
+                <a href="{% url 'posts:post-detail' post.pk %}">{{ post.title }}</a>
+                <small class="text-muted">{{ post.created_at|date:"F d, Y" }}</small>
+                <a href="{% url 'users:user-profile' post.author.pk %}">
+                    <small>{{post.author.first_name|title}} {{post.author.last_name|title}}</small>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

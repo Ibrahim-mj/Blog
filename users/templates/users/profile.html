@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- User Profile Picture -->
+            <div class="text-center">
+                <img src="{{ user.avatar.url }}" class="img-fluid rounded-circle" alt="Profile Picture" style="max-width: 150px;">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <!-- User Information -->
+            {% if user.username %}
+                <h2>{{ user.username }}</h2>
+            {% endif %}
+            <h3>{{ user.first_name|title }} {{ user.last_name|title }}</h3>
+            <p>{{ user.email }}</p>
+            <p>Joined: {{ user.date_joined|date:"F d, Y" }}</p>
+
+            {% if request.user == user %}
+                <!-- Display Edit Profile Button if Current User is the Owner -->
+                <a href="{% url 'users:update-profile' user.pk %}" class="btn btn-primary">Edit Profile</a>
+                <a href="{% url 'users:delete-account' user.pk %}" class="btn btn-danger">Delete Account</a>
+            {% endif %}
+
+            <!-- Personal Info Visible Only to the Owner -->
+            {% if request.user == user %}
+                <h3 class="mt-4">Personal Information</h3>
+                <p>First Name: {{ user.first_name }}</p>
+                <p>Last Name: {{ user.last_name }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- User's Posts -->
+    <h3 class="mt-4">User's Posts</h3>
+    <div class="row">
+        {% if posts %}
+            {% for post in posts %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="Post Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.content|slice:":100" }}{% if post.content|length > 100 %}...{% endif %}</p>
+                            <a href="{% url 'posts:post-detail' post.pk %}" class="btn btn-primary">View Post</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-md-12">
+                <p>No posts available.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Pagination for Excess Posts -->
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Post pagination">
+                <ul class="pagination justify-content-center">
+                    {% if posts.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for num in posts.paginator.page_range %}
+                        <li class="page-item{% if num == posts.number %} active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if posts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}

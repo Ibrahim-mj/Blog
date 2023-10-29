@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="form-group">
+    <h1 class="display-4">Create a Post</h1>
+    <form class="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        
+        <input type="submit" class="btn btn-primary" value="Create Post">
+    </form>
+</div>
+{% endblock %}

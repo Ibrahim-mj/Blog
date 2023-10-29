@@ -1,0 +1,26 @@
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>About Us</h4>
+                <p>Short description of your website or organization.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'posts:home' %}">Home</a></li>
+                    <li><a href="{% url 'posts:post-list' %}">Blog</a></li>
+                    <!-- Add more links as needed -->
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h4>Contact Us</h4>
+                <p>Email: contact@yourwebsite.com</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        &copy; {{ year }} Your Website Name. All rights reserved.
+    </div>
+</footer>

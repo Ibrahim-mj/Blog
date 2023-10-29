@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Edit Profile</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- First Name -->
+        <div class="form-group">
+            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+            <input type="text" name="{{ form.first_name.name }}" class="form-control" value="{{ form.first_name.value }}">
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+            <input type="text" name="{{ form.last_name.name }}" class="form-control" value="{{ form.last_name.value }}">
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            <input type="email" name="{{ form.email.name }}" class="form-control" value="{{ form.email.value }}">
+        </div>
+
+        <!-- avatar -->
+        <div class="form-group">
+            <label for="{{ form.profile_pic.id_for_label }}">Profile Picture</label>
+            <input type="file" name="{{ form.avatar.name }}" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+</div>
+
+{% endblock%}
