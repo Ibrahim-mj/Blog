@@ -27,7 +27,4 @@ To set up the project locally, follow these steps:
    git clone https://github.com/Ibrahim-mj/Blog.git
    cd blog-project
 
-
-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
-
 git clone https://github.com/Ibrahim-mj/Blog.git
